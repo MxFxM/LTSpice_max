@@ -19,6 +19,7 @@ STEPS_PER_CYCLE = 1
 SIMULATION_TIME = 1e-6
 SIMULATION_RUNTIME = 3
 USE_WINE = True
+KEEP_ADDED_SAMPLES = True
 
 # initialize
 time = 0
@@ -100,8 +101,13 @@ while time < SIMULATION_TIME:
             for value in step:
                 out.write(f"{value}\t")
             out.write("\n")
-    for step in variables[1:]: # skip initial point
-        for value in step:
+    if KEEP_ADDED_SAMPLES: # keep all samples
+        for step in variables[1:]: # skip initial point
+            for value in step:
+                out.write(f"{value}\t")
+            out.write("\n")
+    else: # only keep the last point (sample distance as set above)
+        for value in variables[-1]:
             out.write(f"{value}\t")
         out.write("\n")
     
